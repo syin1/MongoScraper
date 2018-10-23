@@ -41,33 +41,141 @@ mongoose.connect(
 // A GET route for scraping the echoJS website
 app.get('/scrape', function(req, res) {
   // First, we grab the body of the html with axios
-  axios.get('http://www.echojs.com/').then(function(response) {
+  axios.get('https://www.cbc.ca/news').then(function(response) {
     // Then, we load that into cheerio and save it to $ for a shorthand selector
     var $ = cheerio.load(response.data);
 
-    // Now, we grab every h2 within an article tag, and do the following:
-    $('article h2').each(function(i, element) {
+    $('a.card.cardFeatured').each(function(i, element) {
       // Save an empty result object
       var result = {};
 
       // Add the text and href of every link, and save them as properties of the result object
-      result.title = $(this)
-        .children('a')
-        .text();
-      result.link = $(this)
-        .children('a')
-        .attr('href');
+      // result.title = $(this)
+      //   .children('a')
+      //   .text();
+      // result.link = $(this)
+      //   .children('a')
+      //   .attr('href');
+
+      // console.log($(this).text());
+      // console.log(
+      //   $(this)
+      //     .children('h3.headline')
+      //     .text()
+      // );
+      console.log(
+        $(this)
+          .find($('h3.headline'))
+          .text()
+      );
+
+      console.log('https://www.cbc.ca' + $(this).attr('href'));
+
+      console.log(
+        $(this)
+          .find($('div.description'))
+          .text()
+      );
+
+      console.log('--------------');
 
       // Create a new Article using the `result` object built from scraping
-      db.Article.create(result)
-        .then(function(dbArticle) {
-          // View the added result in the console
-          console.log(dbArticle);
-        })
-        .catch(function(err) {
-          // If an error occurred, send it to the client
-          return res.json(err);
-        });
+      // db.Article.create(result)
+      //   .then(function(dbArticle) {
+      //     // View the added result in the console
+      //     console.log(dbArticle);
+      //   })
+      //   .catch(function(err) {
+      //     // If an error occurred, send it to the client
+      //     return res.json(err);
+      //   });
+    });
+
+    // Now, we grab every h2 within an article tag, and do the following:
+    $('a.card.cardListing').each(function(i, element) {
+      // Save an empty result object
+      var result = {};
+
+      // Add the text and href of every link, and save them as properties of the result object
+      // result.title = $(this)
+      //   .children('a')
+      //   .text();
+      // result.link = $(this)
+      //   .children('a')
+      //   .attr('href');
+
+      // console.log($(this).text());
+      // console.log(
+      //   $(this)
+      //     .children('h3.headline')
+      //     .text()
+      // );
+      console.log(
+        $(this)
+          .find($('h3.headline'))
+          .text()
+      );
+
+      console.log('https://www.cbc.ca' + $(this).attr('href'));
+
+      console.log(
+        $(this)
+          .find($('div.description'))
+          .text()
+      );
+
+      console.log('--------------');
+
+      // Create a new Article using the `result` object built from scraping
+      // db.Article.create(result)
+      //   .then(function(dbArticle) {
+      //     // View the added result in the console
+      //     console.log(dbArticle);
+      //   })
+      //   .catch(function(err) {
+      //     // If an error occurred, send it to the client
+      //     return res.json(err);
+      //   });
+    });
+
+    $('a.card.cardText').each(function(i, element) {
+      // Save an empty result object
+      var result = {};
+
+      // Add the text and href of every link, and save them as properties of the result object
+      // result.title = $(this)
+      //   .children('a')
+      //   .text();
+      // result.link = $(this)
+      //   .children('a')
+      //   .attr('href');
+
+      // console.log($(this).text());
+      // console.log(
+      //   $(this)
+      //     .children('h3.headline')
+      //     .text()
+      // );
+      console.log(
+        $(this)
+          .find($('h3.headline'))
+          .text()
+      );
+
+      console.log('https://www.cbc.ca' + $(this).attr('href'));
+
+      console.log('--------------');
+
+      // Create a new Article using the `result` object built from scraping
+      // db.Article.create(result)
+      //   .then(function(dbArticle) {
+      //     // View the added result in the console
+      //     console.log(dbArticle);
+      //   })
+      //   .catch(function(err) {
+      //     // If an error occurred, send it to the client
+      //     return res.json(err);
+      //   });
     });
 
     // If we were able to successfully scrape and save an Article, send a message to the client
