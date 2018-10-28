@@ -107,6 +107,7 @@ app.get('/scrape', function(req, res) {
 
       // Add the text and href of every link, and save them as properties of the result object
       result.newsType = 'Main News';
+      result.summary = '';
       result.title = $(this)
         .find($('h3.headline'))
         .text();
