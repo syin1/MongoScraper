@@ -1,32 +1,38 @@
 // Grab the articles as a json
 function renderNews() {
   $.getJSON('/articles', function(data) {
-    // For each one
-    for (var i = 0; i < data.length; i++) {
-      // Display the apropos information on the page
-      $('#articles').append(
-        "<div class='card'>" +
-          "<h5 class='card-header'>" +
-          data[i].newsType +
-          '</h5>' +
-          "<div class='card-body'>" +
-          "<h5 class='card-title'>" +
-          data[i].title +
-          '</h5>' +
-          "<p class='card-text'>" +
-          data[i].summary +
-          '' +
-          '</p>' +
-          "<a href='" +
-          data[i].link +
-          "' target='_blank' class='btn btn-primary'>Go to news link</a>" +
-          "<button type='button' class='btn btn-success'>Save Article</button>" +
-          "<button type='button' class='btn btn-info' data-id='" +
-          data[i]._id +
-          "'>Add Notes</button>" +
-          '</div>' +
-          '</div>'
-      );
+    if (data.length === 0) {
+      $('#articles').empty();
+      $('#articles').append('<p id="noarticle">...Oops, no articles yet!</p>');
+    } else {
+      $('#articles').empty();
+
+      for (var i = 0; i < data.length; i++) {
+        // Display the apropos information on the page
+        $('#articles').append(
+          "<div class='card'>" +
+            "<h5 class='card-header'>" +
+            data[i].newsType +
+            '</h5>' +
+            "<div class='card-body'>" +
+            "<h5 class='card-title'>" +
+            data[i].title +
+            '</h5>' +
+            "<p class='card-text'>" +
+            data[i].summary +
+            '' +
+            '</p>' +
+            "<a href='" +
+            data[i].link +
+            "' target='_blank' class='btn btn-primary'>Go to news link</a>" +
+            "<button type='button' class='btn btn-success'>Save Article</button>" +
+            "<button type='button' class='btn btn-info' data-id='" +
+            data[i]._id +
+            "'>Add Notes</button>" +
+            '</div>' +
+            '</div>'
+        );
+      }
     }
   });
 }

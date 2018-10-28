@@ -11,8 +11,6 @@
       background-color: black;
     }
 
-    #cbctitle,
-    #cbcheader,
     #notesTitle {
       color: white
     }
@@ -52,6 +50,11 @@
       height: 200px;
       font-size: 18px;
     }
+
+    #noarticle {
+      font-size: 30px;
+      color: white;
+    }
   </style>
 </head>
 
@@ -79,11 +82,19 @@
     </div>
   </nav>
 
+  <div class="jumbotron jumbotron-fluid">
+    <div class="container">
+      <h1 class="display-4">CBC News Scraper</h1>
+      <p class="lead">All the top stories!</p>
+    </div>
+  </div>
+
   <div id="wrapper">
-    <h1 id="cbctitle">CBC News Scraper</h1>
-    <h2 id="cbcheader">All the top stories!</h2>
-    <br>
-    <br>
+    <!-- <h1 id="cbctitle">CBC News Scraper</h1>
+    <h2 id="cbcheader">All the top stories!</h2> -->
+    <!-- <br>
+    <br> -->
+
     <div id="articles"></div>
     <div id="notes"></div>
   </div>
