@@ -52,6 +52,7 @@ app.get('/scrape', function(req, res) {
       var result = {};
 
       // Add the text and href of every link, and save them as properties of the result object
+      result.newsType = 'Featured News';
       result.title = $(this)
         .find($('h3.headline'))
         .text();
@@ -78,6 +79,7 @@ app.get('/scrape', function(req, res) {
       var result = {};
 
       // Add the text and href of every link, and save them as properties of the result object
+      result.newsType = 'Top News';
       result.title = $(this)
         .find($('h3.headline'))
         .text();
@@ -104,6 +106,7 @@ app.get('/scrape', function(req, res) {
       var result = {};
 
       // Add the text and href of every link, and save them as properties of the result object
+      result.newsType = 'Main News';
       result.title = $(this)
         .find($('h3.headline'))
         .text();
