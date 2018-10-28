@@ -1,35 +1,39 @@
 // Grab the articles as a json
-$.getJSON('/articles', function(data) {
-  // For each one
-  for (var i = 0; i < data.length; i++) {
-    // Display the apropos information on the page
-    $('#articles').append(
-      "<div class='card'>" +
-        "<h5 class='card-header'>" +
-        data[i].newsType +
-        '</h5>' +
-        "<div class='card-body'>" +
-        "<h5 class='card-title'>" +
-        data[i].title +
-        '</h5>' +
-        "<p class='card-text'>" +
-        data[i].summary +
-        '' +
-        '</p>' +
-        "<a href='" +
-        data[i].link +
-        "' target='_blank' class='btn btn-primary'>Go to news link</a>" +
-        "<button type='button' class='btn btn-success'>Save Article</button>" +
-        "<button type='button' class='btn btn-info' data-id='" +
-        data[i]._id +
-        "'>Add Notes</button>" +
-        '</div>' +
-        '</div>'
-    );
-  }
-});
+function renderNews() {
+  $.getJSON('/articles', function(data) {
+    // For each one
+    for (var i = 0; i < data.length; i++) {
+      // Display the apropos information on the page
+      $('#articles').append(
+        "<div class='card'>" +
+          "<h5 class='card-header'>" +
+          data[i].newsType +
+          '</h5>' +
+          "<div class='card-body'>" +
+          "<h5 class='card-title'>" +
+          data[i].title +
+          '</h5>' +
+          "<p class='card-text'>" +
+          data[i].summary +
+          '' +
+          '</p>' +
+          "<a href='" +
+          data[i].link +
+          "' target='_blank' class='btn btn-primary'>Go to news link</a>" +
+          "<button type='button' class='btn btn-success'>Save Article</button>" +
+          "<button type='button' class='btn btn-info' data-id='" +
+          data[i]._id +
+          "'>Add Notes</button>" +
+          '</div>' +
+          '</div>'
+      );
+    }
+  });
+}
 
-// Whenever someone clicks a p tag
+renderNews();
+
+// Whenever someone clicks the add notes button
 $(document).on('click', '.btn-info', function() {
   // Empty the notes from the note section
   $('#notes').empty();
@@ -92,4 +96,18 @@ $(document).on('click', '#savenote', function() {
   // Also, remove the values entered in the input and textarea for note entry
   $('#titleinput').val('');
   $('#bodyinput').val('');
+});
+
+// Whenever someone clicks the 'Scrape New Articles' button
+$(document).on('click', '#scrapeArticles', function() {
+  // Now make an ajax call to scrape the articles
+  $.ajax({
+    method: 'GET',
+    url: '/scrape'
+  })
+    // With that done, add the note information to the page
+    .then(function(data) {
+      alert('Scrape Success!');
+      renderNews();
+    });
 });
