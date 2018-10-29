@@ -11,6 +11,10 @@ var ArticleSchema = new Schema({
     type: String,
     required: true
   },
+  saved: {
+    type: Boolean,
+    required: true
+  },
   title: {
     type: String,
     required: true

@@ -25,7 +25,9 @@ function renderNews() {
             "<a href='" +
             data[i].link +
             "' target='_blank' class='btn btn-primary'>Go to news link</a>" +
-            "<button type='button' class='btn btn-success'>Save Article</button>" +
+            "<button type='button' class='btn btn-success' data-id='" +
+            data[i]._id +
+            "'>Save Article</button>" +
             "<button type='button' class='btn btn-info' data-id='" +
             data[i]._id +
             "'>Add Notes</button>" +
@@ -117,3 +119,6 @@ $(document).on('click', '#scrapeArticles', function() {
       renderNews();
     });
 });
+
+// Whenever someone clicks the 'Save Article' button
+$(document).on('click', '.btn-success', function() {});
