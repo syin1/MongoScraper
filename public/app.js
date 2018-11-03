@@ -1,6 +1,9 @@
 // Grab the articles as a json
-function renderNews() {
+function renderNews(title, header) {
   $.getJSON('/articles', function(data) {
+    $('.newstitle').html(title);
+    $('.newsheader').html(header);
+
     if (data.length === 0) {
       $('#articles').empty();
       $('#articles').append('<p id="noarticle">...Oops, no articles yet!</p>');
@@ -8,10 +11,22 @@ function renderNews() {
       $('#articles').empty();
 
       for (var i = 0; i < data.length; i++) {
+        let color;
+
+        if (data[i].newsType === 'Featured News') {
+          color = 'bg-danger';
+        } else if (data[i].newsType === 'Top News') {
+          color = 'bg-warning';
+        } else if (data[i].newsType === 'Main News') {
+          color = 'bg-info';
+        }
+
         // Display the apropos information on the page
         $('#articles').append(
           "<div class='card'>" +
-            "<h5 class='card-header'>" +
+            "<h5 class='card-header " +
+            color +
+            "'>" +
             data[i].newsType +
             '</h5>' +
             "<div class='card-body'>" +
@@ -39,7 +54,7 @@ function renderNews() {
   });
 }
 
-renderNews();
+renderNews('CBC News Scraper', 'All the top stories!');
 
 // Whenever someone clicks the add notes button
 $(document).on('click', '.btn-info', function() {
@@ -64,7 +79,9 @@ $(document).on('click', '.btn-info', function() {
       $('#notes').append("<textarea id='bodyinput' name='body'></textarea>");
       // A button to submit a new note, with the id of the article saved to it
       $('#notes').append(
-        "<button data-id='" + data._id + "' id='savenote'>Save Note</button>"
+        "<button class='btn btn-primary btn-sm btn-block' data-id='" +
+          data._id +
+          "' id='savenote'>Save Note</button>"
       );
 
       // If there's a note in the article
@@ -116,9 +133,18 @@ $(document).on('click', '#scrapeArticles', function() {
     // With that done, add the note information to the page
     .then(function(data) {
       alert('Scrape Success!');
-      renderNews();
+      renderNews('CBC News Scraper', 'All the top stories!');
     });
 });
 
 // Whenever someone clicks the 'Save Article' button
-$(document).on('click', '.btn-success', function() {});
+// $(document).on('click', '.btn-success', function() {
+//   $.ajax({
+//     method: 'GET',
+//     url: '/saved'
+//   })
+//     // With that done, add the note information to the page
+//     .then(function(data) {
+//       renderNews('Saved Articles', '');
+//     });
+// });
