@@ -12,6 +12,7 @@ function renderNews(type, title, header) {
 
       for (var i = 0; i < data.length; i++) {
         let color;
+        let buttonsToAdd;
 
         if (data[i].newsType === 'Featured News') {
           color = 'bg-danger';
@@ -19,6 +20,21 @@ function renderNews(type, title, header) {
           color = 'bg-warning';
         } else if (data[i].newsType === 'Main News') {
           color = 'bg-info';
+        }
+
+        if (type === 'articles') {
+          buttonsToAdd =
+            "<button type='button' class='btn btn-success' data-id='" +
+            data[i]._id +
+            "'>Save Article</button>";
+        } else if (type === 'saved') {
+          buttonsToAdd =
+            "<button type='button' class='btn btn-info' data-id='" +
+            data[i]._id +
+            "'>Add Notes</button>" +
+            "<button type='button' class='btn btn-danger' data-id='" +
+            data[i]._id +
+            "'>Delete Article</button>";
         }
 
         // Display the apropos information on the page
@@ -40,12 +56,7 @@ function renderNews(type, title, header) {
             "<a href='" +
             data[i].link +
             "' target='_blank' class='btn btn-primary'>Go to news link</a>" +
-            "<button type='button' class='btn btn-success' data-id='" +
-            data[i]._id +
-            "'>Save Article</button>" +
-            "<button type='button' class='btn btn-info' data-id='" +
-            data[i]._id +
-            "'>Add Notes</button>" +
+            buttonsToAdd +
             '</div>' +
             '</div>'
         );
