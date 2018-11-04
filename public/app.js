@@ -173,3 +173,18 @@ $(document).on('click', '.btn-success', function() {
     renderNews('articles', 'CBC News Scraper', 'All the top stories!');
   });
 });
+
+// Whenever someone clicks the 'Delete Article' button
+$(document).on('click', '.btn-danger', function() {
+  // Save the id from the p tag
+  var thisId = $(this).attr('data-id');
+
+  // Now make an ajax call for the Article
+  $.ajax({
+    method: 'POST',
+    url: '/delete/' + thisId
+  }).then(function(data) {
+    alert('Article deleted!');
+    renderNews('saved', 'Saved Articles', 'All your stories!');
+  });
+});
