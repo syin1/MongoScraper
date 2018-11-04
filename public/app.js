@@ -170,5 +170,6 @@ $(document).on('click', '.btn-success', function() {
     url: '/saved/' + thisId
   }).then(function(data) {
     alert('Saved article!');
+    renderNews('articles', 'CBC News Scraper', 'All the top stories!');
   });
 });
