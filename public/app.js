@@ -1,6 +1,6 @@
 // Grab the articles as a json
-function renderNews(title, header) {
-  $.getJSON('/articles', function(data) {
+function renderNews(type, title, header) {
+  $.getJSON('/' + type, function(data) {
     $('.newstitle').html(title);
     $('.newsheader').html(header);
 
@@ -54,7 +54,7 @@ function renderNews(title, header) {
   });
 }
 
-renderNews('CBC News Scraper', 'All the top stories!');
+renderNews('articles', 'CBC News Scraper', 'All the top stories!');
 
 // Whenever someone clicks the add notes button
 $(document).on('click', '.btn-info', function() {
@@ -133,18 +133,31 @@ $(document).on('click', '#scrapeArticles', function() {
     // With that done, add the note information to the page
     .then(function(data) {
       alert('Scrape Success!');
-      renderNews('CBC News Scraper', 'All the top stories!');
+      renderNews('articles', 'CBC News Scraper', 'All the top stories!');
+    });
+});
+
+$(document).on('click', '#savedArticle', function() {
+  $.ajax({
+    method: 'GET',
+    url: '/saved'
+  })
+    // With that done, add the note information to the page
+    .then(function(data) {
+      renderNews('saved', 'Saved Articles', 'All your stories!');
     });
 });
 
 // Whenever someone clicks the 'Save Article' button
-// $(document).on('click', '.btn-success', function() {
-//   $.ajax({
-//     method: 'GET',
-//     url: '/saved'
-//   })
-//     // With that done, add the note information to the page
-//     .then(function(data) {
-//       renderNews('Saved Articles', '');
-//     });
-// });
+$(document).on('click', '.btn-success', function() {
+  // Save the id from the p tag
+  var thisId = $(this).attr('data-id');
+
+  // Now make an ajax call for the Article
+  $.ajax({
+    method: 'POST',
+    url: '/saved/' + thisId
+  }).then(function(data) {
+    alert('Saved article!');
+  });
+});
